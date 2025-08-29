@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sneakersapp.presentation.HomeScreen
 import com.example.sneakersapp.presentation.LoginScreen
+import com.example.sneakersapp.presentation.SearchScreen
+import com.example.sneakersapp.presentation.SneakerScreen
 import com.example.sneakersapp.viewmodels.LoginViewModel
 
 @Composable
@@ -25,6 +27,14 @@ fun NavGraph(navController: NavHostController = rememberNavController()){
 
         composable(Screen.Home.route) {
             HomeScreen(navController)
+        }
+
+        composable(Screen.Search.route) {
+            SearchScreen()
+        }
+
+        composable(Screen.Sneaker.route) {
+            SneakerScreen()
         }
     }
 
