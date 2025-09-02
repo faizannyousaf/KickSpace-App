@@ -1,11 +1,14 @@
 package com.example.sneakersapp.presentation
 
 
-import androidx.compose.foundation.layout.Column
+
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,14 +25,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.sneakersapp.model.Sneaker
 import com.example.sneakersapp.model.SneakerItem
+import com.example.sneakersapp.navigation.Screen
 import com.example.sneakersapp.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
     val viewModel: HomeViewModel = viewModel()
-
+Box{
     Scaffold(topBar = {
         SearchBar(
             modifier = Modifier
@@ -57,80 +62,57 @@ fun HomeScreen(navController: NavController) {
 
     { innerPadding ->
         val sneakers by viewModel.sneakers.collectAsState()
-        Column(
+        LazyColumn(
             modifier = Modifier.padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxHeight()
+                .fillMaxWidth()
         ) {
-            Text(
-                "Recently Viewed",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 20.dp, start = 10.dp)
-            )
-            LazyRow {
-                items(sneakers) { sneaker ->
-                    SneakerItem(sneaker)
-
-                }
+            item {
+                ListCategory("Recently Viewed",
+                    sneakers,navController)
+                Spacer(modifier = Modifier.size(30.dp))
             }
 
-            Spacer(modifier = Modifier.size(30.dp))
+            item {
+                ListCategory("Top Searches this week",
+                    sneakers,navController)
 
-            Text(
-                "Top searches this week",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 20.dp, start = 10.dp)
-            )
-
-            LazyRow {
-                items(sneakers) { sneaker ->
-                    SneakerItem(sneaker)
-
-                }
+                Spacer(modifier = Modifier.size(30.dp))
             }
-            Spacer(modifier = Modifier.size(30.dp))
+          item {
+              ListCategory("Trending shoes",
+                  sneakers, navController)
+          }
 
-            Spacer(modifier = Modifier.size(30.dp))
-            Text(
-                "Trending",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 20.dp, start = 10.dp)
-            )
 
-            LazyRow {
-                items(sneakers) { sneaker ->
-                    SneakerItem(sneaker)
-                    }
-
-                }
-            }
         }
-
-
-
-
-
-
-
-    //        TopAppBar(
-//            colors = topAppBarColors(
-//                containerColor = MaterialTheme.colorScheme.primaryContainer,
-//                titleContentColor = MaterialTheme.colorScheme.primary,
-//            ),
-//            title = {
-//                Column (modifier = Modifier.fillMaxSize(),
-//                    verticalArrangement = Arrangement.Center,
-//                    horizontalAlignment = Alignment.CenterHorizontally){ Text("Home") }
-//            },
-//            navigationIcon = { IconButton(onClick = {navController.popBackStack()}){
-//                Icon(
-//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-//                    contentDescription = "Localized description"
-//                )
-//            } }
-//        )
-
+    }
 
 }
+
+}
+
+@Composable
+fun ListCategory(categoryName : String, sneakers : List<Sneaker>, navController: NavController){
+    Text(
+        categoryName,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        modifier = Modifier.padding(top = 20.dp, start = 10.dp)
+    )
+    LazyRow {
+        items(sneakers) { sneaker ->
+            SneakerItem(sneaker, onItemClick = { selectedSneaker->
+//
+                navController.navigate(Screen.Sneaker.sneakerDetailRoute(selectedSneaker.id))
+            })
+        }
+
+    }
+}
+
+//@Composable
+//fun NavigateToSneakerPage(sneaker: Sneaker){
+//    val navController = rememberNavController()
+//    navController.navigate("sneaker")
+//}

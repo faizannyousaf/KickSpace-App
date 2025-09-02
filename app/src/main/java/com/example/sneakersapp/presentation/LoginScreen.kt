@@ -3,8 +3,12 @@ package com.example.sneakersapp.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +23,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sneakersapp.viewmodels.LoginViewModel
 
@@ -44,10 +49,12 @@ fun LoginScreen(navController: NavController, viewModel : LoginViewModel){
     ){innerPadding ->
         Column (modifier = Modifier
             .padding(innerPadding)
-            .fillMaxSize(),
+            .fillMaxWidth()
+            .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
             InputFields(viewModel)
+            Spacer(modifier = Modifier.size(20.dp))
             Button(onClick = { navController.navigate("home") }) {
                 Text("Login")
             }
@@ -70,7 +77,8 @@ fun InputFields(viewModel: LoginViewModel){
                Text("Email")
            }
    )
-    val password by viewModel.email.observeAsState("")
+    Spacer(modifier = Modifier.size(10.dp))
+    val password by viewModel.password.observeAsState("")
     OutlinedTextField(
         value = password,
         onValueChange = {

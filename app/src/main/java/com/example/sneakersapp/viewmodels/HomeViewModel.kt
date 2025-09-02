@@ -17,7 +17,7 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun fetchSneakers() {
-        _sneakers.value = SneakerRepository.FetchSneaker()
+        _sneakers.value = SneakerRepository.fetchSneakers()
     }
 
 

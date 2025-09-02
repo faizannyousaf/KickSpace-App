@@ -3,6 +3,7 @@ package com.example.sneakersapp.model
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +19,10 @@ import androidx.compose.ui.unit.sp
 import com.example.sneakersapp.R
 
 @Composable
-fun SneakerItem(sneaker: Sneaker){
+fun SneakerItem(sneaker: Sneaker, onItemClick:(sneaker : Sneaker) -> Unit){
  //   val navController : NavController
     Column (modifier = Modifier.fillMaxWidth()
+        .clickable {  onItemClick(sneaker) }
         .padding(8.dp)) {
         if(sneaker.imageUrl != null){
             Image(
