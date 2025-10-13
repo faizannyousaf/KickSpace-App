@@ -2,7 +2,6 @@ package com.example.sneakersapp.viewmodels
 
 
 import androidx.lifecycle.ViewModel
-import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.repositories.ReviewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
