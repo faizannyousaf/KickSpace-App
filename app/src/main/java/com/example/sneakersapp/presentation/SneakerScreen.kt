@@ -23,14 +23,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sneakersapp.R
-import com.example.sneakersapp.model.Sneaker
-
+import com.example.sneakersapp.model.entities.Sneaker
+import com.example.sneakersapp.viewmodels.ReviewsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SneakerScreen( sneaker: Sneaker?){
 
+
+    val reviewViewModel = hiltViewModel<ReviewsViewModel>()
     Scaffold  (topBar = {
         TopAppBar(
             colors = topAppBarColors(
@@ -75,7 +78,7 @@ fun SneakerScreen( sneaker: Sneaker?){
 
                 Spacer(modifier = Modifier.size(15.dp))
 
-                Text(text = sneaker.name, fontWeight = FontWeight.Bold,
+                Text(text = sneaker.name!!, fontWeight = FontWeight.Bold,
                     fontSize = 25.sp)
 
                 Spacer(modifier = Modifier.size(15.dp))

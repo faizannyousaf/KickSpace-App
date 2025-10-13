@@ -1,7 +1,6 @@
 package com.example.sneakersapp.presentation
 
-
-
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,24 +16,34 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.sneakersapp.model.Sneaker
-import com.example.sneakersapp.model.SneakerItem
+import com.example.sneakersapp.model.entities.Sneaker
+import com.example.sneakersapp.model.items.SneakerItem
 import com.example.sneakersapp.navigation.Screen
-import com.example.sneakersapp.viewmodels.HomeViewModel
+import com.example.sneakersapp.viewmodels.ReviewsViewModel
+import com.example.sneakersapp.viewmodels.SneakersViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    val viewModel: HomeViewModel = viewModel()
+    val sneakerViewModel = hiltViewModel<SneakersViewModel>()
+
 Box{
+
     Scaffold(topBar = {
         SearchBar(
             modifier = Modifier
@@ -61,29 +70,43 @@ Box{
 
 
     { innerPadding ->
-        val sneakers by viewModel.sneakers.collectAsState()
+
+
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
-            item {
-                ListCategory("Recently Viewed",
-                    sneakers,navController)
-                Spacer(modifier = Modifier.size(30.dp))
+            GlobalScope.launch (Dispatchers.IO){
+                sneakerViewModel.insertSneaker()
             }
 
-            item {
-                ListCategory("Top Searches this week",
-                    sneakers,navController)
+            GlobalScope.launch (Dispatchers.IO ) {
+                val sneakers = sneakerViewModel.fetchSneakers()
 
-                Spacer(modifier = Modifier.size(30.dp))
+                item {
+                    ListCategory(
+                        "Recently Viewed",
+                        sneakers, navController
+                    )
+                    Spacer(modifier = Modifier.size(30.dp))
+                }
+
+                item {
+                    ListCategory(
+                        "Top Searches this week",
+                        sneakers, navController
+                    )
+
+                    Spacer(modifier = Modifier.size(30.dp))
+                }
+                item {
+                    ListCategory(
+                        "Trending shoes",
+                        sneakers, navController
+                    )
+                }
             }
-          item {
-              ListCategory("Trending shoes",
-                  sneakers, navController)
-          }
-
 
         }
     }
@@ -94,6 +117,9 @@ Box{
 
 @Composable
 fun ListCategory(categoryName : String, sneakers : List<Sneaker>, navController: NavController){
+
+
+    Log.d("CheckCor","Coroutine runnning successfully")
     Text(
         categoryName,
         fontWeight = FontWeight.Bold,
@@ -111,8 +137,3 @@ fun ListCategory(categoryName : String, sneakers : List<Sneaker>, navController:
     }
 }
 
-//@Composable
-//fun NavigateToSneakerPage(sneaker: Sneaker){
-//    val navController = rememberNavController()
-//    navController.navigate("sneaker")
-//}

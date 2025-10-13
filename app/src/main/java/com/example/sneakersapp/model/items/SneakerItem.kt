@@ -1,6 +1,4 @@
-package com.example.sneakersapp.model
-
-
+package com.example.sneakersapp.model.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sneakersapp.R
+import com.example.sneakersapp.model.entities.Sneaker
 
 @Composable
 fun SneakerItem(sneaker: Sneaker, onItemClick:(sneaker : Sneaker) -> Unit){
@@ -37,10 +36,10 @@ fun SneakerItem(sneaker: Sneaker, onItemClick:(sneaker : Sneaker) -> Unit){
                modifier = Modifier.size(200.dp))
         }
         Spacer(modifier = Modifier.size(10.dp))
-           Text(sneaker.name,
+           Text(sneaker.name!!,
                fontWeight = FontWeight.Bold,
                fontSize = 20.sp)
-            Text(sneaker.releaseYear,
+            Text(sneaker.releaseYear!!,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )

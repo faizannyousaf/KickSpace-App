@@ -9,17 +9,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.sneakersapp.model.SneakerRepository
+import com.example.sneakersapp.model.repositories.SneakerRepository
 import com.example.sneakersapp.presentation.HomeScreen
 import com.example.sneakersapp.presentation.LoginScreen
 import com.example.sneakersapp.presentation.SearchScreen
 import com.example.sneakersapp.presentation.SneakerScreen
 import com.example.sneakersapp.viewmodels.LoginViewModel
+import com.example.sneakersapp.viewmodels.SneakersViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController()){
 
     val viewModel: LoginViewModel = viewModel()
+    val sneakerViewModel : SneakersViewModel = viewModel()
     NavHost(modifier = Modifier,
         navController = navController,
         startDestination = Screen.Login.route
@@ -40,8 +48,13 @@ fun NavGraph(navController: NavHostController = rememberNavController()){
             listOf(navArgument("sneakerId") { type = NavType.IntType })
         ) {backStackEntry ->
             val sneakerId = backStackEntry.arguments?.getInt("sneakerId")
-            val sneaker = SneakerRepository.fetchSneakers().firstOrNull { it.id == sneakerId }
-            SneakerScreen(sneaker)
+//          coroutineScope {
+//              val sneaker = sneakerViewModel.fetchSneakers().firstOrNull { it.id == sneakerId }
+//              SneakerScreen(sneaker)
+//          }
+
+
+
 
         }
     }
