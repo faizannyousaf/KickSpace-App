@@ -1,6 +1,6 @@
 package com.example.sneakersapp.viewmodels
 
-import android.view.View
+
 import androidx.lifecycle.ViewModel
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.repositories.ReviewsRepository
@@ -12,12 +12,12 @@ import javax.inject.Inject
 class ReviewsViewModel @Inject constructor(
                        private val repository : ReviewsRepository) : ViewModel() {
 
-   suspend fun insertDummyData(){
-        repository.insertReviews(Review(1,"very good shoes",
-            2,3,3))
-    }
+//   suspend fun insertDummyData(){
+//        repository.insertReviews(Review(1,"very good shoes",
+//            2,3,3))
+//    }
 
-    suspend fun fetchReviews() : List<Review>{
-       return repository.fetchReviews()
-    }
+//    suspend fun fetchReviews() : List<Review>{
+//       return repository.fetchReviews()
+//    }
 }
