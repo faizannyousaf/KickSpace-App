@@ -1,7 +1,8 @@
 package com.example.sneakersapp.presentation
 
 
-import androidx.compose.foundation.clickable
+
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -22,16 +26,20 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.sneakersapp.viewmodels.LoginViewModel
+import com.example.sneakersapp.model.entities.User
+import com.example.sneakersapp.viewmodels.SignUpViewModel
+import com.example.sneakersapp.viewmodels.UserViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, viewModel : LoginViewModel){
+fun SignUpScreen(navController: NavController, viewModel : SignUpViewModel){
+    var result = ""
 
+   // val userViewModel = hiltViewModel<UserViewModel>()
 
     Scaffold  (topBar = {
         TopAppBar(
@@ -40,9 +48,17 @@ fun LoginScreen(navController: NavController, viewModel : LoginViewModel){
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
             title = {
-               Column (modifier = Modifier.fillMaxSize(),
-                   verticalArrangement = Arrangement.Center,
-                   horizontalAlignment = Alignment.CenterHorizontally){ Text("Login") }
+                Column (modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally){ Text("Sign Up") }
+            },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
             }
         )
     }
@@ -53,48 +69,35 @@ fun LoginScreen(navController: NavController, viewModel : LoginViewModel){
             .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
-
-
-            Text(viewModel.errorMessage ,color = MaterialTheme.colorScheme.error)
+            OutlinedTextField(
+                value = viewModel.name,
+                onValueChange = {viewModel.name = it},
+                label = { Text("name") }
+            )
             Spacer(modifier = Modifier.size(20.dp))
 
             OutlinedTextField(
                 value = viewModel.email,
                 onValueChange = {viewModel.email = it},
-                label = { Text("email") },
-                singleLine = true
+                label = { Text("email") }
             )
+            Spacer(modifier = Modifier.size(20.dp))
 
             OutlinedTextField(
                 value = viewModel.password,
                 onValueChange = {viewModel.password = it},
-                visualTransformation = PasswordVisualTransformation(),
-                label = { Text("password") },
-                singleLine = true
+                label = { Text("password") }
             )
             Spacer(modifier = Modifier.size(20.dp))
 
-            Button(onClick = { viewModel.validateLogin() },
-                enabled = !viewModel.isLoading){
-                if (viewModel.isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                } else {
-                    Text("Login")
-                }
+            Button(onClick = {
+              viewModel.insertUser()
+            }) {
+                Text("Sign Up")
             }
-
-                if(viewModel.loginSuccess){
-                    navController.navigate("home")
-                }
-
-
             Spacer(modifier = Modifier.size(20.dp))
+            Text(viewModel.errorMessage!! ,color = Color.Black)
 
-            Text("New user? Sign Up!",
-                modifier = Modifier.clickable { navController.navigate("signup") })
         }
 
 
@@ -102,5 +105,9 @@ fun LoginScreen(navController: NavController, viewModel : LoginViewModel){
 
     }
 
-    }
+}
 
+fun insertUser( name: String, email: String, password : String, viewModel : UserViewModel){
+    viewModel.insertUser(User(1,"Faizan", email,password,"",0))
+
+}

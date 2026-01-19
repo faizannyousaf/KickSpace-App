@@ -1,20 +1,27 @@
 package com.example.sneakersapp.model.Dao
 
 import androidx.room.Dao
-import androidx.room.Entity
+import androidx.room.Delete
+import androidx.room.DeleteTable
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.sneakersapp.model.entities.Sneaker
-import com.example.sneakersapp.navigation.Screen
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface SneakerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSneaker(vararg sneaker: Sneaker)
+    suspend fun insertSneaker(sneaker: Sneaker)
 
-    @Query("SELECT * FROM review")
-     suspend fun fetchSneakers() : List<Sneaker>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllSneakers(sneakers : List<Sneaker>)
+
+    @Query("SELECT * FROM sneaker")
+    fun fetchSneakers() : Flow<List<Sneaker>>
+
+    @Delete
+    suspend fun deleteSneaker(sneaker: Sneaker)
 }

@@ -4,28 +4,33 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
-import com.example.sneakersapp.database.AppDatabase
 import com.example.sneakersapp.navigation.NavGraph
 import com.example.sneakersapp.ui.theme.SneakersAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject lateinit var userPreferences: UserPreferences
+
+
+    //var userPreferences = UserPreferences()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "database-name"
-            ).build()
 
+            val startDestination = if(userPreferences.isLoggedIn()) {
+                "home"
+            }
+                else{
+                    "login"
+                }
             SneakersAppTheme {
              val navController = rememberNavController()
-               NavGraph( navController)
+               NavGraph( navController, startDestination)
             }
         }
     }
