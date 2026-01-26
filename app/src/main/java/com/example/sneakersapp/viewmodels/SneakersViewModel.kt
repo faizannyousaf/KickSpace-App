@@ -4,6 +4,7 @@ package com.example.sneakersapp.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sneakersapp.UiState
+import com.example.sneakersapp.UserPreferences
 import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.model.repositories.SneakerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.flow.catch
 
 @HiltViewModel
 class SneakersViewModel @Inject constructor(
-    private val sneakerRepository: SneakerRepository
+    private val sneakerRepository: SneakerRepository,
+    private val userPreferences: UserPreferences
 ) : ViewModel() {
 
     private val _sneakerState = MutableStateFlow<UiState<List<Sneaker>>>(UiState.Loading)

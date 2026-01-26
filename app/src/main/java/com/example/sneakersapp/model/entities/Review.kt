@@ -6,18 +6,11 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Update
 
-
-@Entity(foreignKeys = [
-    ForeignKey(entity = User::class, parentColumns = ["id"], childColumns = ["id"]),
-    ForeignKey(entity = Sneaker::class, parentColumns = ["id"], childColumns = ["id"])
-])
+@Entity
 data class Review(
-   @PrimaryKey var id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Int,
    @ColumnInfo(name = "comment") val comment : String,
-    val rating : Int,
-
-    //Foreign keys
-    @ColumnInfo(name = "authorId") val authorId : Int,
+   @ColumnInfo(name = "rating") val rating : Int,
     @ColumnInfo (name = "sneakerId") val sneakerId: Int,
 
 )

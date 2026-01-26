@@ -1,37 +1,53 @@
 package com.example.sneakersapp.viewmodels
 
 
-import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sneakersapp.UiState
+import com.example.sneakersapp.UserPreferences
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.repositories.ReviewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class ReviewsViewModel @Inject constructor(
-                       private val repository : ReviewsRepository) : ViewModel() {
-     private val _review =  MutableLiveData<String>()
-    var review : LiveData<String> = _review
+                       private val repository : ReviewsRepository,
+    private val userPreferences: UserPreferences) : ViewModel() {
 
 
-    private val _reviewState = MutableStateFlow<UiState<List<Review>>>(UiState.Loading)
-    val reviewState = _reviewState.asStateFlow()
+    var review by mutableStateOf("")
+    private var userEmail : String = ""
 
 
+    private val _reviewsState = MutableStateFlow<UiState<List<Review>>>(UiState.Loading)
+    val reviewsState: StateFlow<UiState<List<Review>>> = _reviewsState.asStateFlow()
 
-    fun onReviewChange(newReview :String){
-        _review.value = newReview
+    fun loadReviewsForSneaker(sneakerId: Int) {
+        viewModelScope.launch {
+            repository.fetchReviewsBySneakerID(sneakerId)
+                .map<List<Review>, UiState<List<Review>>> { reviews ->
+                    UiState.Success(reviews)
+                }
+                .catch { exception ->
+                    emit(UiState.Error(exception.message ?: "Failed to load reviews"))
+                }
+                .collect { state ->
+                    _reviewsState.value = state
+                }
+        }
     }
 
 
@@ -40,19 +56,11 @@ class ReviewsViewModel @Inject constructor(
             repository.insertReviews(review)
         }
     }
-//
-//
-//    fun getReviews(){
-//        viewModelScope.launch {
-//            repository.fetchReviews()
-//                .catch { e->
-//                    _reviewState.value = UiState.Error(e.message ?: "Unknown error")
-//
-//                }
-//                .collect{sneakers->
-//                    _reviewState.value = UiState.Success(sneakers)
-//                }
-//
-//        }
-//    }
+
+    fun getUserEmail() : String{
+        userEmail = userPreferences.getUserEmail().toString()
+        return userEmail
+    }
+
+
 }

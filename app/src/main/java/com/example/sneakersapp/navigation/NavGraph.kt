@@ -1,6 +1,5 @@
 package com.example.sneakersapp.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,12 +11,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.sneakersapp.presentation.HomeScreen
 import com.example.sneakersapp.presentation.LoginScreen
+import com.example.sneakersapp.presentation.ReviewScreen
 import com.example.sneakersapp.presentation.SearchScreen
 import com.example.sneakersapp.presentation.SignUpScreen
 import com.example.sneakersapp.presentation.SneakerScreen
 import com.example.sneakersapp.viewmodels.LoginViewModel
 import com.example.sneakersapp.viewmodels.SignUpViewModel
-import com.example.sneakersapp.viewmodels.SneakersViewModel
 
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController(),
@@ -49,7 +48,14 @@ fun NavGraph(navController: NavHostController = rememberNavController(),
                 type = NavType.IntType
             })
         ){
-            SneakerScreen(it.arguments?.getInt("sneakerId")!!.toInt())
+            SneakerScreen(it.arguments?.getInt("sneakerId")!!.toInt(), navController)
+        }
+        composable(route = Screen.Reviews.route,
+            arguments = listOf(navArgument("sneakerId"){
+                type = NavType.IntType
+            })
+        ){
+            ReviewScreen(it.arguments?.getInt("sneakerId")!!.toInt(), navController)
         }
     }
     }
