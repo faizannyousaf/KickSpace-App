@@ -21,12 +21,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sneakersapp.R
 import com.example.sneakersapp.model.entities.Review
+import com.example.sneakersapp.viewmodels.ReviewsViewModel
 
 
 @Composable
 fun ReviewItems(review: Review){
+    val reviewViewModel = hiltViewModel<ReviewsViewModel>()
     Card(
         modifier = Modifier.fillMaxWidth()
             .height(175.dp)
@@ -48,7 +51,7 @@ fun ReviewItems(review: Review){
                 )
 
                 Text(modifier = Modifier.padding(top = 15.dp)
-                    , text = "name",
+                    , text = reviewViewModel.getUserEmail().take(5),
                     fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.size(5.dp))

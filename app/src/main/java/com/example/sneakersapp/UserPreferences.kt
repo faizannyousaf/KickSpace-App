@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import androidx.core.content.edit
 
 @Singleton
 class UserPreferences @Inject constructor(
@@ -47,7 +48,7 @@ class UserPreferences @Inject constructor(
 
     // Clear session (logout)
     fun clearSession() {
-        prefs.edit().clear().apply()
+        prefs.edit { clear() }
     }
 }
 

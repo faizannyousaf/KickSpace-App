@@ -39,6 +39,13 @@ android {
     buildFeatures {
         compose = true
     }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src/main/assets")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -71,7 +78,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("io.coil-kt:coil-compose:2.5.0")
     implementation(libs.androidx.lifecycle.runtime.ktx.v240)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)

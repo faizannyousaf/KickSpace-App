@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "users",
-    indices = [Index(value = ["email"], unique = true)]  // ← This enforces uniqueness!
+    indices = [Index(value = ["email"], unique = true)]
 )
 data class User(
     @PrimaryKey(autoGenerate = true) var id: Int,

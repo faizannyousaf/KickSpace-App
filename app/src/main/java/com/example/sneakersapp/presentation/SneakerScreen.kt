@@ -1,18 +1,28 @@
 package com.example.sneakersapp.presentation
 
 import android.util.Log
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -32,24 +42,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.SubcomposeAsyncImage
 import com.example.sneakersapp.R
 import com.example.sneakersapp.UiState
-import com.example.sneakersapp.UserPreferences
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.entities.Sneaker
-import com.example.sneakersapp.model.entities.User
 import com.example.sneakersapp.navigation.Screen
 import com.example.sneakersapp.viewmodels.ReviewsViewModel
 import com.example.sneakersapp.viewmodels.SneakersViewModel
@@ -77,7 +87,7 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
 
                 Column (modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally){ Text("No name") }
+                    horizontalAlignment = Alignment.CenterHorizontally){ Text("") }
             },
 
             navigationIcon = {
@@ -114,12 +124,15 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                         .padding(innerPadding)
                         .fillMaxSize()
                 ) {
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
-                        painter = painterResource(R.drawable.sneaker_placeholder),
-                        contentDescription = sneaker?.name
+                    SubcomposeAsyncImage(
+                        model = sneaker?.imageUrl,
+                        contentDescription = "Photo of ${sneaker?.name}",
+                        modifier = Modifier.fillMaxWidth()
+                            .height(300.dp)
+                            .aspectRatio(1.5f)
+                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                        contentScale = ContentScale.Crop,
+                        loading = {ShimmerPlaceholder() }
                     )
 
                     Spacer(modifier = Modifier.size(15.dp))
@@ -152,7 +165,8 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                     )
 
                     Button(onClick = { reviewViewModel.insertReviews(Review
-                        (0,reviewViewModel.review,4, sneaker.id!!))},
+                        (0,reviewViewModel.review,4, sneaker.id))
+                        reviewViewModel.review = ""},
                         modifier = Modifier.padding(start = 10.dp)) {
                         Text("Add Review")
                     }
@@ -174,7 +188,8 @@ fun LoadReviews(reviewsViewModel: ReviewsViewModel, sneakerID: Int,
    when(val state = reviewsState){
        is UiState.Loading -> {
            CircularProgressIndicator(
-             //  modifier = Modifier.align(Alignment.Center)
+               modifier = Modifier.size(20.dp),
+               color = MaterialTheme.colorScheme.onPrimary
            )
        }
 
@@ -219,7 +234,7 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
             }
             Spacer(modifier = Modifier.size(5.dp))
             Text(modifier = Modifier.padding(start = 10.dp),
-                text = reviewsList.first().comment)
+                text = reviewsList.last().comment)
         }
 
         Spacer(modifier = Modifier.size(5.dp))
@@ -233,3 +248,25 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
     }
 
 }
+
+@Composable
+fun ShimmerPlaceholder() {
+    val transition = rememberInfiniteTransition(label = "")
+    val translateAnim by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1200, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ), label = ""
+    )
+
+    val brush = Brush.linearGradient(
+        colors = listOf(Color.LightGray.copy(alpha = 0.6f), Color.LightGray.copy(alpha = 0.2f), Color.LightGray.copy(alpha = 0.6f)),
+        start = Offset.Zero,
+        end = Offset(x = translateAnim, y = translateAnim)
+    )
+
+    Box(modifier = Modifier.fillMaxSize().background(brush))
+}
+

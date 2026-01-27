@@ -25,6 +25,7 @@ class SneakersViewModel @Inject constructor(
     private val _sneakerState = MutableStateFlow<UiState<List<Sneaker>>>(UiState.Loading)
     val sneakerState = _sneakerState.asStateFlow()
 
+
     fun deleteSneaker(sneaker: Sneaker){
         viewModelScope.launch(Dispatchers.IO) {
             sneakerRepository.deleteSneaker(sneaker)
@@ -37,16 +38,17 @@ class SneakersViewModel @Inject constructor(
     init {
 
         viewModelScope.launch(Dispatchers.IO) {
-            sneakerRepository.insertAllSneakers(
-                listOf(
-                    Sneaker(1, "Nike", "Nice Shoes", "Hello", "1999"),
-                    Sneaker(2, "Adidas", "Comfortable Shoes", "Hello", "1999"),
-                    Sneaker(3, "Reebok", "Uncomfortable Shoes", "Hello", "1999"),
-                    Sneaker(4, "New Balance", "Excellent shoes Shoes", "Hello", "1999"),
-                    Sneaker(5, "Armani", "Excellent shoes Shoes", "Hello", "1999"),
-
-                )
-            )
+//            sneakerRepository.insertAllSneakers(
+//                listOf(
+//                    Sneaker(1, "Nike", "Nice Shoes", "Hello", "1999"),
+//                    Sneaker(2, "Adidas", "Comfortable Shoes", "Hello", "1999"),
+//                    Sneaker(3, "Reebok", "Uncomfortable Shoes", "Hello", "1999"),
+//                    Sneaker(4, "New Balance", "Excellent shoes Shoes", "Hello", "1999"),
+//                    Sneaker(5, "Armani", "Excellent shoes Shoes", "Hello", "1999"),
+//
+//                )
+//            )
+            sneakerRepository.checkAndSeedDatabase()
         }
 
         getSneakers()
