@@ -43,3 +43,11 @@ Android app for sneaker enthusiasts.
 ## License
 
 This project is for educational and portfolio purposes.
+
+## Disclaimer
+
+This application is a portfolio project created for educational purposes only. 
+All sneaker brand names, images, and trademarks are property of their respective owners. 
+This app is not affiliated with or endorsed by any sneaker brands.
+
+Product images are used for demonstration purposes under fair use for educational projects.
