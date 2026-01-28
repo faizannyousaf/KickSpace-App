@@ -23,3 +23,23 @@ Android app for sneaker enthusiasts.
 <img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/edd2bf35-af09-4799-9c7e-ee5c757cb92d" />
 <img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/e3c78fa1-4afe-4345-897f-3d74c9e9c869" />
 <img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/4d52c38e-322d-48fa-aa60-a859ba7d5622" />
+
+## Getting Started
+
+1. Clone the repository
+2. Open in Android Studio
+3. Build and run on emulator or device
+
+## Future Enhancements
+
+- User profile management
+- Wishlist/favorites
+- Review editing
+
+## Author
+
+[Your Name]
+
+## License
+
+This project is for educational and portfolio purposes.
