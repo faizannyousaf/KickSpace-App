@@ -1,4 +1,14 @@
-# Sneakers App
+**Challenge**:
+Online sneaker buyers struggle with trust and decision-making due to scattered reviews and lack of authentic community feedback, leading to purchase hesitation and poor buying decisions.
+
+**Solution**: 
+SoleHub creates a unified platform where users can discover sneakers and access genuine community reviews, streamlining the research process and enabling confident purchasing decisions through peer validation.
+
+**Impact**:
+Reduces average research time and increases buyer confidence through centralized, community-driven product insights.
+
+
+# KickSpace App
 
 Android app for sneaker enthusiasts.
 
@@ -38,7 +48,7 @@ Android app for sneaker enthusiasts.
 
 ## Author
 
-[Your Name]
+Faizan Yousaf
 
 ## License
 
