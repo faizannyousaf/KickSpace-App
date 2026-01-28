@@ -1,0 +1,46 @@
+[
+    {
+        "sneaker_id": "1",
+        "brand": "Jordan",
+        "name": "Air Jordan 1 High",
+        "sku": "DZ5485-612",
+        "category": "Basketball",
+        "release_date": "2022-11-19",
+        "retail_price": 180,
+        "description": "The shoe that started it all. High-cut silhouette with premium leather overlays.",
+        "image_url": "https://i8.amplience.net/i/jpl/jd_505056_a?qlt=92&w=950&h=673&v=1&fmt=auto"
+    },
+    {
+        "sneaker_id": "2",
+        "brand": "Nike",
+        "name": "Air Force 1 '07",
+        "sku": "CW2288-111",
+        "category": "Classic",
+        "release_date": "2022-11-19",
+        "retail_price": 110,
+        "description": "The crisp white-on-white classic that never goes out of style.",
+        "image_url": "https://i8.amplience.net/i/jpl/jd_030664_a?qlt=92&w=950&h=673&v=1&fmt=auto"
+    },
+    {
+        "sneaker_id": "3",
+        "brand": "New Balance",
+        "name": "9060 Rain Cloud",
+        "sku": "U9060GRY",
+        "category": "Lifestyle",
+        "release_date": "2022-11-19",
+        "retail_price": 160,
+        "description": "Futuristic design meets classic 99X heritage for ultimate comfort.",
+        "image_url": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80"
+    },
+     {
+    "sneaker_id": "4",
+    "brand": "Converse",
+    "name": "Chuck Taylor All Star High",
+    "sku": "M9160C",
+    "category": "Lifestyle",
+    "release_date": "1917-01-01",
+    "retail_price": 65,
+    "description": "The timeless classic. Canvas upper with rubber toe cap and iconic ankle patch. A cultural icon for over 100 years.",
+    "image_url": "https://i8.amplience.net/i/jpl/jd_003199_a?qlt=92&w=950&h=673&v=1&fmt=auto"
+  }
+]
