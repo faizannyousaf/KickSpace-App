@@ -42,9 +42,11 @@ Android app for sneaker enthusiasts.
 
 ## Future Enhancements
 
-- User profile management
-- Wishlist/favorites
-- Review editing
+- Search and filter functionality
+- User profile customization
+- Wishlist/favorites system
+- Review moderation and reporting
+- Social features (follow users, upvote reviews)
 
 ## Author
 
