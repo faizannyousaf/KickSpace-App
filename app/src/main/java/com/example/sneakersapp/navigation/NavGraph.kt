@@ -32,6 +32,9 @@ fun NavGraph(navController: NavHostController = rememberNavController(),
             LoginScreen(navController, viewModel)
         }
 
+        composable(Screen.Search.route) {
+            SearchScreen(navController)
+        }
         composable(Screen.SignUp.route) {
             SignUpScreen(navController, signUpViewModel)
         }
@@ -40,9 +43,6 @@ fun NavGraph(navController: NavHostController = rememberNavController(),
             HomeScreen(navController)
         }
 
-        composable(Screen.Search.route) {
-            SearchScreen()
-        }
         composable(route = Screen.Sneaker.route,
             arguments = listOf(navArgument("sneakerId"){
                 type = NavType.IntType

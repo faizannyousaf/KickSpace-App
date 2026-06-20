@@ -19,5 +19,9 @@ class ReviewsRepository(private val reviewsDao: ReviewsDao) {
         return reviewsDao.fetchReviewsBySneakerID(sneakerId )
     }
 
+    fun deleteRows(){
+        return reviewsDao.deleteRows()
+    }
+
 
 }

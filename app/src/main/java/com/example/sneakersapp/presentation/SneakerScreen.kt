@@ -164,12 +164,19 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                             }
                     )
 
-                    Button(onClick = { reviewViewModel.insertReviews(Review
-                        (0,reviewViewModel.review,4, sneaker.id))
-                        reviewViewModel.review = ""},
-                        modifier = Modifier.padding(start = 10.dp)) {
-                        Text("Add Review")
+                    if(reviewViewModel.review.isEmpty()){
+                        Log.d("Error","Need Input")
                     }
+                    else{
+                        Button(onClick = { reviewViewModel.insertReviews(Review
+                            (0,reviewViewModel.review,4, sneaker.id))
+                            reviewViewModel.review = ""},
+                            modifier = Modifier.padding(start = 10.dp)) {
+                            Text("Add Review")
+                        }
+                    }
+
+
                     Spacer(modifier = Modifier.size(15.dp))
                     LoadReviews(reviewViewModel,sneakerID, navController)
                 }
@@ -229,7 +236,7 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
                 )
 
                 Text(modifier = Modifier.padding(top = 15.dp)
-                    , text = "@${userEmail.take(6)}",
+                    , text = userEmail.take(6),
                     fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.size(5.dp))

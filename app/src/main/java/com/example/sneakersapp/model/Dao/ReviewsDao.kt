@@ -20,5 +20,8 @@ interface ReviewsDao {
      @Query("Select * FROM review where sneakerId == :sneakerId")
      fun fetchReviewsBySneakerID(sneakerId :Int): Flow<List<Review>>
 
+     @Query("DELETE From review where comment == '' ")
+     fun deleteRows()
+
 
 }

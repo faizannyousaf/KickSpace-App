@@ -12,13 +12,12 @@ import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.repositories.ReviewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
@@ -37,6 +36,9 @@ class ReviewsViewModel @Inject constructor(
 
     fun loadReviewsForSneaker(sneakerId: Int) {
         viewModelScope.launch {
+            deleteShoe()
+        }
+        viewModelScope.launch {
             repository.fetchReviewsBySneakerID(sneakerId)
                 .map<List<Review>, UiState<List<Review>>> { reviews ->
                     UiState.Success(reviews)
@@ -50,7 +52,10 @@ class ReviewsViewModel @Inject constructor(
         }
     }
 
-
+    fun deleteShoe() {
+        val executor = Executors.newSingleThreadExecutor()
+        executor.execute { repository.deleteRows() }
+    }
     fun insertReviews(review: Review) {
         viewModelScope.launch {
             repository.insertReviews(review)

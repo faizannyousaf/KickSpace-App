@@ -22,7 +22,7 @@ constructor(private val userRepository: UserRepository):ViewModel() {
     var name by mutableStateOf("")
     var email by mutableStateOf("")
     var password by mutableStateOf("")
-    var errorMessage by mutableStateOf<String>("")
+    var errorMessage by mutableStateOf("")
 
 
     fun insertUser() {

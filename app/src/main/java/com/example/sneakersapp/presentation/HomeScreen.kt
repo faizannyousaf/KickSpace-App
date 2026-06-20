@@ -14,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -40,26 +39,19 @@ fun HomeScreen(navController: NavController) {
 Box {
     Scaffold(topBar = {
         SearchBar(
-            modifier = Modifier
-                .padding(20.dp),
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = "",
-                    onQueryChange = { },
-                    onSearch = {
-                        navController.navigate("search")
-
-                    },
-                    expanded = false,
-                    onExpandedChange = { },
-                    placeholder = { Text("Search") }
-                )
+            modifier = Modifier.padding(20.dp),
+            query = "",
+            onQueryChange = {},
+            onSearch = {},
+            active = false,
+            onActiveChange = {
+                navController.navigate("search")
             },
-            expanded = false,
-            onExpandedChange = { navController.navigate("search") },
-
-            ) {
+            placeholder = { Text("Search for sneakers") }
+        ) {
+            // Empty - we're navigating away
         }
+
     })
 
 

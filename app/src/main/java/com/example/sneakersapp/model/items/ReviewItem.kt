@@ -51,7 +51,7 @@ fun ReviewItems(review: Review){
                 )
 
                 Text(modifier = Modifier.padding(top = 15.dp)
-                    , text = reviewViewModel.getUserEmail().take(5),
+                    , text = reviewViewModel.getUserEmail().take(6),
                     fontWeight = FontWeight.Bold)
             }
             Spacer(modifier = Modifier.size(5.dp))
