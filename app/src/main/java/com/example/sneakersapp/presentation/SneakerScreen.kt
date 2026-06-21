@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -61,6 +62,7 @@ import com.example.sneakersapp.UiState
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.navigation.Screen
+import com.example.sneakersapp.ui.theme.TopBarBackground
 import com.example.sneakersapp.viewmodels.ReviewsViewModel
 import com.example.sneakersapp.viewmodels.SneakersViewModel
 
@@ -80,7 +82,7 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
     Scaffold  (topBar = {
         TopAppBar(
             colors = topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = TopBarBackground,
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
             title = {
@@ -139,17 +141,17 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
 
                     Text(modifier = Modifier.padding(start = 10.dp),
                         text = sneaker?.name!!, fontWeight = FontWeight.Bold,
-                        fontSize = 25.sp
+                        fontSize = 25.sp, color = MaterialTheme.colorScheme.primary
                     )
 
-                    Spacer(modifier = Modifier.size(15.dp))
+                    Spacer(modifier = Modifier.size(5.dp))
 
                     Text( modifier = Modifier.padding(start = 10.dp),
                         text = sneaker.description, fontWeight = FontWeight.Medium,
-                        fontSize = 15.sp
+                        fontSize = 15.sp, color = MaterialTheme.colorScheme.secondary
                     )
 
-                    Spacer(modifier = Modifier.size(15.dp))
+                    Spacer(modifier = Modifier.size(10.dp))
 
 
                     OutlinedTextField( modifier = Modifier.fillMaxWidth()
@@ -171,7 +173,10 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                         Button(onClick = { reviewViewModel.insertReviews(Review
                             (0,reviewViewModel.review,4, sneaker.id))
                             reviewViewModel.review = ""},
-                            modifier = Modifier.padding(start = 10.dp)) {
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimary,
+                                contentColor = Color.White),
+                            modifier = Modifier.padding(start = 10.dp)
+                        ) {
                             Text("Add Review")
                         }
                     }

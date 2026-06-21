@@ -52,7 +52,7 @@ class ReviewsViewModel @Inject constructor(
         }
     }
 
-    fun deleteShoe() {
+    private fun deleteShoe() {
         val executor = Executors.newSingleThreadExecutor()
         executor.execute { repository.deleteRows() }
     }
