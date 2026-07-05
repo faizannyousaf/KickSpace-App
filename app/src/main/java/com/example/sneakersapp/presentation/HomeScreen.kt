@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.sneakersapp.UiState
 import com.example.sneakersapp.model.entities.Sneaker
+import com.example.sneakersapp.model.items.SearchItem
 import com.example.sneakersapp.model.items.SneakerItem
 import com.example.sneakersapp.navigation.Screen
 import com.example.sneakersapp.viewmodels.SneakersViewModel
@@ -123,7 +124,7 @@ fun ListCategory(categoryName : String, sneakers : List<Sneaker>, navController:
             SneakerItem(sneaker, onItemClick = { selectedSneaker->
 //
                 Log.d("SneakerIddF",selectedSneaker.id.toString())
-                navController.navigate(Screen.Sneaker.sneakerDetailRoute(selectedSneaker.id!!))
+                navController.navigate(Screen.Sneaker.sneakerDetailRoute(selectedSneaker.id))
             })
         }
 

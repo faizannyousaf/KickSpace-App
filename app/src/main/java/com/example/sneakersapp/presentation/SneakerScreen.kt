@@ -82,7 +82,7 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
     Scaffold  (topBar = {
         TopAppBar(
             colors = topAppBarColors(
-                containerColor = TopBarBackground,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
             title = {
