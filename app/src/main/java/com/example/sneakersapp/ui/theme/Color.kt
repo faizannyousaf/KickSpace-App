@@ -20,15 +20,6 @@ val OnBackground = Color(0xFF111111)
 val OnSurface = Color(0xFF111111)
 val OnSurfaceVariant = Color(0xFF999999)
 
-val TagBackground = Color(0xFFFFF0F2)
-val TagText = Color(0xFFFF385C)
-val TagNeutralBackground = Color(0xFFF5F5F5)
-val TagNeutralText = Color(0xFF666666)
-
-val Outline = Color(0xFFF0F0F0)
-
-val TopBarBackground = Color(0xFF1A1A1A)
-
 //Text Colors
 
 val TextPrimary = Color(0xFF111111)

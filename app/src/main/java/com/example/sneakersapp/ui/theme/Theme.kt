@@ -21,7 +21,7 @@ private val LightColorScheme = lightColorScheme(
 
     onPrimary = Primary,
     onBackground = OnBackground,
-    onSurface = OnSurface
+    onSurface = PurpleGrey80
 
 
 

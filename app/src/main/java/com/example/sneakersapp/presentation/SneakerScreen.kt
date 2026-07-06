@@ -62,7 +62,6 @@ import com.example.sneakersapp.UiState
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.navigation.Screen
-import com.example.sneakersapp.ui.theme.TopBarBackground
 import com.example.sneakersapp.viewmodels.ReviewsViewModel
 import com.example.sneakersapp.viewmodels.SneakersViewModel
 
