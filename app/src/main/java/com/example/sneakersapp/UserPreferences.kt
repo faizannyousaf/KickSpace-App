@@ -17,14 +17,16 @@ class UserPreferences @Inject constructor(
     companion object {
         private const val KEY_USER_ID = "user_id"
         private const val KEY_USER_EMAIL = "user_email"
+        private const val KEY_USER_NAME = "user_name"
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
     }
 
     // Save user session
-    fun saveUserSession(userId: Int, email: String) {
+    fun saveUserSession(userId: Int, email: String, name : String) {
         prefs.edit().apply {
             putInt(KEY_USER_ID, userId)
             putString(KEY_USER_EMAIL, email)
+            putString(KEY_USER_NAME, name)
             putBoolean(KEY_IS_LOGGED_IN, true)
             apply()
         }
@@ -46,6 +48,9 @@ class UserPreferences @Inject constructor(
         return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
     }
 
+    fun getUserName() : String?{
+        return prefs.getString(KEY_USER_NAME,null)
+    }
     // Clear session (logout)
     fun clearSession() {
         prefs.edit { clear() }

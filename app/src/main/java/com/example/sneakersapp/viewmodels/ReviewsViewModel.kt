@@ -67,5 +67,9 @@ class ReviewsViewModel @Inject constructor(
         return userEmail
     }
 
+    fun getUserName() : String{
+       return userPreferences.getUserName().toString()
+    }
+
 
 }

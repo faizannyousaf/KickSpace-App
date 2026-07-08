@@ -1,42 +1,25 @@
 package com.example.sneakersapp.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 
-//private val DarkColorScheme = darkColorScheme(
-//    primary = Purple80,
-//    secondary = PurpleGrey80,
-//    tertiary = Pink80
-//)
-
 private val LightColorScheme = lightColorScheme(
-    primary = TextPrimary,
-    secondary = TextSecondary,
-    background = Background,
-    surface = Surface,
+    primary = White,
+    onPrimary = DarkSurface,
+    secondary = GreyText,
+    onSecondary = DarkSurface,
+    background = White,
+    onBackground = DarkText,
+    surface = CardWhite,
+    onSurface = DarkText,
+    surfaceVariant = OffWhite,
+    onSurfaceVariant = GreyText,
+    outline = LightBorder,
+    onPrimaryContainer = LimeGreen
 
-    onPrimary = Primary,
-    onBackground = OnBackground,
-    onSurface = PurpleGrey80
-
-
-
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
-
 @Composable
 fun SneakersAppTheme(
   //  darkTheme: Boolean = isSystemInDarkTheme(),

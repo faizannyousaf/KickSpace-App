@@ -36,7 +36,7 @@ constructor(private val userRepository: UserRepository,
       val user = userRepository.validateLogin(email, password)
 
       if(user != null){
-        userPreferences.saveUserSession(user.id,user.email)
+        userPreferences.saveUserSession(user.id,user.email,user.name)
         loginSuccess = true
       }
       else{

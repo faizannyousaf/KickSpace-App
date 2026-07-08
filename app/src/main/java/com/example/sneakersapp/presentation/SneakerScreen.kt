@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +36,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -51,6 +53,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,31 +80,32 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
     val uiState by sneakerViewModel.sneakerState.collectAsState()
 
 
+//        topBar = {
+//        TopAppBar(
+//            colors = topAppBarColors(
+//                containerColor = MaterialTheme.colorScheme.primary,
+//                titleContentColor = MaterialTheme.colorScheme.primary,
+//            ),
+//            title = {
+//
+//                Column (modifier = Modifier.fillMaxSize(),
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally){ Text("") }
+//            },
+//
+//            navigationIcon = {
+//                IconButton(onClick = { navController.popBackStack() }) {
+//                    Icon(
+//                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                        contentDescription = "Back"
+//                    )
+//                }
+//            }
+//        )
+//    }
 
-    Scaffold  (topBar = {
-        TopAppBar(
-            colors = topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary,
-            ),
-            title = {
-
-                Column (modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally){ Text("") }
-            },
-
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-        )
-    }
-    ) { innerPadding ->
+    Scaffold()
+    { innerPadding ->
 
 
         when (uiState) {
@@ -124,14 +128,13 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                     modifier = Modifier
                         .padding(innerPadding)
                         .fillMaxSize()
+                        .fillMaxHeight()
                 ) {
                     SubcomposeAsyncImage(
                         model = sneaker?.imageUrl,
                         contentDescription = "Photo of ${sneaker?.name}",
                         modifier = Modifier.fillMaxWidth()
-                            .height(300.dp)
-                            .aspectRatio(1.5f)
-                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                            .height(400.dp),
                         contentScale = ContentScale.Crop,
                         loading = {ShimmerPlaceholder() }
                     )
@@ -140,7 +143,7 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
 
                     Text(modifier = Modifier.padding(start = 10.dp),
                         text = sneaker?.name!!, fontWeight = FontWeight.Bold,
-                        fontSize = 25.sp, color = MaterialTheme.colorScheme.primary
+                        fontSize = 25.sp, color = MaterialTheme.colorScheme.onPrimary
                     )
 
                     Spacer(modifier = Modifier.size(5.dp))
@@ -156,13 +159,24 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                     OutlinedTextField( modifier = Modifier.fillMaxWidth()
                         .padding(10.dp),
                         value = reviewViewModel.review,
+                        placeholder = { Text("Add you review") },
                         onValueChange = {
                             reviewViewModel.review = it
                         },
-                        label =
-                            {
-                                Text("Your review")
-                            }
+
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            cursorColor = MaterialTheme.colorScheme.onSecondary,
+                            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     )
 
                     if(reviewViewModel.review.isEmpty()){
@@ -224,7 +238,7 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
             .height(175.dp)
             .padding(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
         )
     ) {
         Column {
@@ -232,7 +246,7 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
                 Image(
                     modifier = Modifier
                         .size(80.dp)
-                        .padding(10.dp)
+                        .padding(top = 8.dp, start = 5.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(R.drawable.user_placeholder),
@@ -241,7 +255,8 @@ fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
 
                 Text(modifier = Modifier.padding(top = 15.dp)
                     , text = userEmail.take(6),
-                    fontWeight = FontWeight.Bold)
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary)
             }
             Spacer(modifier = Modifier.size(5.dp))
             Text(modifier = Modifier.padding(start = 10.dp),
