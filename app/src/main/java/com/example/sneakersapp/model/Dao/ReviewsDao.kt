@@ -23,5 +23,8 @@ interface ReviewsDao {
      @Query("DELETE From review where comment == '' ")
      fun deleteRows()
 
+     @Query("Select COUNT(*) From review where sneakerId == :sneakerId")
+     suspend fun fetchReviewCount(sneakerId : Int) : Int
+
 
 }

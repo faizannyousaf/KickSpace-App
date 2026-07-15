@@ -83,13 +83,13 @@ Box {
                 Image(
                     painter = painterResource(id = R.drawable.kickspace_logo),
                     contentDescription = "KickSpace Logo",
-                    modifier = Modifier.size(70.dp)
+                    modifier = Modifier.size(60.dp)
                 )
 
                 Spacer(modifier = Modifier.padding(start = 3.dp))
                 Text("Hi, ${reviewViewModel.getUserName()}",
                     modifier = Modifier.padding(start = 5.dp, top = 20.dp),
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
@@ -175,12 +175,21 @@ Box {
 fun ListCategory(categoryName : String, sneakers : List<Sneaker>, navController: NavController){
 
 
-    Text(
+    Row {
+        Text(
         categoryName,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         modifier = Modifier.padding(top = 20.dp, start = 10.dp)
     )
+        Spacer(modifier = Modifier.weight(1f))  // Pushes "See all" to the right
+        Text(
+            "See all ->",
+            modifier = Modifier.padding(start = 10.dp, top = 20.dp, end = 10.dp),
+            fontWeight = FontWeight.Medium,
+            fontSize = 20.sp, color = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    }
     LazyRow {
         items(sneakers) { sneaker ->
             SneakerItem(sneaker, onItemClick = { selectedSneaker->

@@ -7,6 +7,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +23,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,39 +48,56 @@ import com.example.sneakersapp.model.entities.Sneaker
 
 @Composable
 fun SneakerItem(sneaker: Sneaker, onItemClick:(sneaker : Sneaker) -> Unit){
-    Column (modifier = Modifier.fillMaxWidth()
-        .clickable {  onItemClick(sneaker) }
-        .padding(8.dp)) {
-        if(sneaker.imageUrl.isEmpty()){
-            Image(
-                painter = painterResource(id = R.drawable.sneaker_placeholder),
-                contentDescription = null,
-                modifier = Modifier.width(300.dp)
-                    .height(200.dp)
-            )
-        }
-        else{
-            SubcomposeAsyncImage(
-                model = sneaker.imageUrl,
-                contentDescription = "Photo of ${sneaker.name}",
-                modifier = Modifier.width(300.dp)
-                    .height(200.dp)
-                    .aspectRatio(1.5f)
-                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
-                contentScale = ContentScale.Crop,
-                loading = { ShimmerPlaceholder() }
-            )
-        }
+    Card(modifier = Modifier.padding(8.dp)
+        .size(280.dp),
+        colors = CardColors(MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            disabledContentColor = MaterialTheme.colorScheme.secondary,
+            disabledContainerColor = MaterialTheme.colorScheme.secondary),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp,
+
+        )) {
+
+        Column(
+            modifier = Modifier.fillMaxWidth()
+            .clickable { onItemClick(sneaker) }) {
+            if (sneaker.imageUrl.isEmpty()) {
+                Image(
+                    painter = painterResource(id = R.drawable.sneaker_placeholder),
+                    contentDescription = null,
+                    modifier = Modifier.width(320.dp)
+                        .height(200.dp)
+
+                )
+            } else {
+                SubcomposeAsyncImage(
+                    model = sneaker.imageUrl,
+                    contentDescription = "Photo of ${sneaker.name}",
+                    modifier = Modifier.width(300.dp)
+                        .height(200.dp)
+                        .aspectRatio(1.5f)
+                        .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                    contentScale = ContentScale.Crop,
+                    loading = { ShimmerPlaceholder() }
+                )
+            }
 
 
-        Spacer(modifier = Modifier.size(10.dp))
-           Text(sneaker.name.take(10),
-               fontWeight = FontWeight.Bold,
-               fontSize = 20.sp)
-            Text(sneaker.brandName,
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                sneaker.name.take(10),
+                modifier = Modifier.padding(start = 5.dp),
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+            Text(
+                sneaker.brandName,
+                modifier = Modifier.padding(start = 5.dp),
                 fontSize = 20.sp
             )
 
+        }
     }
 
 }

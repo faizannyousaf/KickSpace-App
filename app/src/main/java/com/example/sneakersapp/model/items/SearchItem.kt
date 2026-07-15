@@ -27,14 +27,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import com.example.sneakersapp.R
 import com.example.sneakersapp.model.entities.Sneaker
+import com.example.sneakersapp.viewmodels.AddReviewModel
 
 
 @Composable
 fun SearchItem(sneaker: Sneaker,onItemClick:(sneaker : Sneaker) -> Unit){
 
+     val viewModel : AddReviewModel = hiltViewModel()
    Card(modifier = Modifier.width(200.dp)
        .height(220.dp)
        .clickable {  onItemClick(sneaker) },

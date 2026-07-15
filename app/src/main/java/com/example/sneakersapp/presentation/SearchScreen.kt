@@ -48,7 +48,6 @@ import com.example.sneakersapp.ui.theme.getTextFieldColors
 import com.example.sneakersapp.viewmodels.SneakersViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen (navController: NavController) {
     var query by rememberSaveable { mutableStateOf("") }

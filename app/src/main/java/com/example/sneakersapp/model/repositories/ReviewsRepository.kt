@@ -23,5 +23,9 @@ class ReviewsRepository(private val reviewsDao: ReviewsDao) {
         return reviewsDao.deleteRows()
     }
 
+    suspend fun getReviewsCount(sneakerId :Int) :Int {
+        return reviewsDao.fetchReviewCount(sneakerId)
+    }
+
 
 }

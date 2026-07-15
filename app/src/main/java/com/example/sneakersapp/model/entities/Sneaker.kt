@@ -16,5 +16,6 @@ data class Sneaker(
     @SerializedName ("release_date") var releaseDate : String = "",
     @SerializedName ("retail_price") var retailPrice : String = "",
     @SerializedName("description")var description: String = "",
-    @SerializedName("image_url") var imageUrl: String = ""
+    @SerializedName("image_url") var imageUrl: String = "",
+    @SerializedName("ratingCount") var ratingCount: Int = 0
 )

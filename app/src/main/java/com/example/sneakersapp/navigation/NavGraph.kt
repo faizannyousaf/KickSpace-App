@@ -1,5 +1,6 @@
 package com.example.sneakersapp.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,9 +16,11 @@ import com.example.sneakersapp.presentation.ReviewScreen
 import com.example.sneakersapp.presentation.SearchScreen
 import com.example.sneakersapp.presentation.SignUpScreen
 import com.example.sneakersapp.presentation.SneakerScreen
+import com.example.sneakersapp.ui.theme.AddReviewScreen
 import com.example.sneakersapp.viewmodels.LoginViewModel
 import com.example.sneakersapp.viewmodels.SignUpViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(navController: NavHostController = rememberNavController(),
              startDestination : String){
@@ -43,12 +46,20 @@ fun NavGraph(navController: NavHostController = rememberNavController(),
             HomeScreen(navController)
         }
 
+        composable(route = Screen.AddReview.route,
+            arguments = listOf(navArgument("sneakerId"){
+                type = NavType.IntType
+            })
+        ){
+            AddReviewScreen(it.arguments?.getInt("sneakerId")!!,navController)
+        }
+
         composable(route = Screen.Sneaker.route,
             arguments = listOf(navArgument("sneakerId"){
                 type = NavType.IntType
             })
         ){
-            SneakerScreen(it.arguments?.getInt("sneakerId")!!.toInt(), navController)
+            SneakerScreen(it.arguments?.getInt("sneakerId")!!, navController)
         }
         composable(route = Screen.Reviews.route,
             arguments = listOf(navArgument("sneakerId"){

@@ -11,6 +11,7 @@ import com.example.sneakersapp.UserPreferences
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.repositories.ReviewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,9 +31,11 @@ class ReviewsViewModel @Inject constructor(
     var review by mutableStateOf("")
     private var userEmail : String = ""
 
+    var reviewCount by mutableStateOf(0)
 
     private val _reviewsState = MutableStateFlow<UiState<List<Review>>>(UiState.Loading)
     val reviewsState: StateFlow<UiState<List<Review>>> = _reviewsState.asStateFlow()
+
 
     fun loadReviewsForSneaker(sneakerId: Int) {
         viewModelScope.launch {
@@ -69,6 +72,14 @@ class ReviewsViewModel @Inject constructor(
 
     fun getUserName() : String{
        return userPreferences.getUserName().toString()
+    }
+
+      fun getReviewsCount(SneakerId : Int)  {
+          viewModelScope.launch {
+              reviewCount = repository.getReviewsCount(SneakerId)
+          }
+
+
     }
 
 
