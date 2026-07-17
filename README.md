@@ -1,4 +1,4 @@
-<img width="501" height="905" alt="Screenshot 2026-07-08 at 16 07 00" src="https://github.com/user-attachments/assets/0535255e-7315-4b08-b67a-6563a4baa859" /><img width="411" height="726" alt="image" src="https://github.com/user-attachments/assets/7c0404e2-e2b8-4eae-9d82-43507d2aa66a" />**Challenge**:
+**Challenge**:
 Online sneaker buyers struggle with trust and decision-making due to scattered reviews and lack of authentic community feedback, leading to purchase hesitation and poor buying decisions.
 
 **Solution**: 
