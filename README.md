@@ -1,4 +1,4 @@
-**Challenge**:
+<img width="501" height="905" alt="Screenshot 2026-07-08 at 16 07 00" src="https://github.com/user-attachments/assets/0535255e-7315-4b08-b67a-6563a4baa859" /><img width="411" height="726" alt="image" src="https://github.com/user-attachments/assets/7c0404e2-e2b8-4eae-9d82-43507d2aa66a" />**Challenge**:
 Online sneaker buyers struggle with trust and decision-making due to scattered reviews and lack of authentic community feedback, leading to purchase hesitation and poor buying decisions.
 
 **Solution**: 
@@ -28,11 +28,13 @@ Android app for sneaker enthusiasts.
 - Coroutines & Flow
 - Navigation Component
 
-<img width="345" height="686" alt="image" src="https://github.com/user-attachments/assets/1bfcfb1c-cf1f-43b7-897f-f55dcb6a764c" />
-<img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/3e414400-d416-4575-91bc-3d5b15416293" />
-<img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/edd2bf35-af09-4799-9c7e-ee5c757cb92d" />
-<img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/e3c78fa1-4afe-4345-897f-3d74c9e9c869" />
-<img width="345" height="737" alt="image" src="https://github.com/user-attachments/assets/4d52c38e-322d-48fa-aa60-a859ba7d5622" />
+<img width="501" height="905" alt="Screenshot 2026-07-08 at 16 27 13" src="https://github.com/user-attachments/assets/ef74a77e-ecf1-434b-837d-e40962928f10" />
+<img width="501" height="905" alt="Screenshot 2026-07-08 at 16 07 00" src="https://github.com/user-attachments/assets/0aa70f0c-a3b0-4378-bc8d-c8c1176cc783" />
+<img width="380" height="788" alt="image" src="https://github.com/user-attachments/assets/3931fdf2-5c01-4fbe-a7dc-6044e65d48ba" />
+<img width="380" height="788" alt="image" src="https://github.com/user-attachments/assets/a1dff32d-3675-477e-be3b-dedc49c6a2bb" />
+
+
+
 
 ## Getting Started
 
