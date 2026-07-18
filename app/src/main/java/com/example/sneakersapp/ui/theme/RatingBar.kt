@@ -45,7 +45,7 @@ fun RatingBarInput(
 
 @Composable
 fun RatingBar(
-    rating: Double,
+    rating: Int,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {

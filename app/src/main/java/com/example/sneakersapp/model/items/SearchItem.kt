@@ -70,11 +70,13 @@ fun SearchItem(sneaker: Sneaker,onItemClick:(sneaker : Sneaker) -> Unit){
        Spacer(modifier = Modifier.padding(5.dp))
 
        Text(sneaker.name,
+           modifier = Modifier.padding(start = 5.dp),
            maxLines = 1,
            color = MaterialTheme.colorScheme.onPrimary)
 
        Text(sneaker.brandName,
-           modifier = Modifier.padding(start = 2.dp),
+
+           modifier = Modifier.padding(start = 5.dp),
            fontWeight = FontWeight.SemiBold,
            maxLines = 1,
            fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary

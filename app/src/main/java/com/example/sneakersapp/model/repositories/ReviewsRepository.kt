@@ -27,5 +27,9 @@ class ReviewsRepository(private val reviewsDao: ReviewsDao) {
         return reviewsDao.fetchReviewCount(sneakerId)
     }
 
+    suspend fun getRatingAverage(sneakerId :Int) :Float? {
+        return reviewsDao.getRatingAverage(sneakerId)
+    }
+
 
 }

@@ -37,9 +37,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import com.example.sneakersapp.UiState
+import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.presentation.ShimmerPlaceholder
 import com.example.sneakersapp.viewmodels.AddReviewModel
+import com.example.sneakersapp.viewmodels.ReviewsViewModel
 import com.example.sneakersapp.viewmodels.SneakersViewModel
 
 @ExperimentalMaterial3Api
@@ -48,8 +50,8 @@ fun AddReviewScreen(sneakerID : Int, navController : NavController){
 
     val sneakerViewModel = hiltViewModel<SneakersViewModel>()
     val uiState by sneakerViewModel.sneakerState.collectAsState()
+     val reviewViewModel : ReviewsViewModel = hiltViewModel()
 
-     val viewModel : AddReviewModel = hiltViewModel()
    Scaffold(topBar = {
        TopAppBar(title = {
          Text("Write A Review",
@@ -78,7 +80,9 @@ fun AddReviewScreen(sneakerID : Int, navController : NavController){
                modifier = Modifier.fillMaxWidth()
                    .padding(start = 20.dp, end = 20.dp, bottom = 30.dp)
                    .height(60.dp),
-               onClick = { navController.navigate("addReview") },
+               onClick ={ reviewViewModel.insertReviews(Review(0,reviewViewModel.comment,
+                   sneakerID,reviewViewModel.selectedRating,reviewViewModel.getUserName()))
+                        navController.popBackStack()},
            ) {
                Text("Add Review")
            }
@@ -128,8 +132,6 @@ fun AddReviewScreen(sneakerID : Int, navController : NavController){
                                modifier = Modifier.padding(start = 10.dp, top = 3.dp)
                            )
                        }
-
-
                    }
 
 
@@ -151,8 +153,8 @@ fun AddReviewScreen(sneakerID : Int, navController : NavController){
                    Spacer(modifier = Modifier.size(10.dp))
 
                    RatingBarInput(
-                       rating = viewModel.selectedRating,
-                       onRatingChanged = { viewModel.selectedRating = it })
+                       rating = reviewViewModel.selectedRating,
+                       onRatingChanged = { reviewViewModel.selectedRating = it })
 
                    Spacer(modifier = Modifier.size(10.dp))
                    Text(
@@ -177,8 +179,8 @@ fun AddReviewScreen(sneakerID : Int, navController : NavController){
                        modifier = Modifier.fillMaxWidth()
                            .height(200.dp)
                            .padding(start = 10.dp, end = 10.dp),
-                       value = viewModel.comment,
-                       onValueChange = { viewModel.comment = it },
+                       value = reviewViewModel.comment,
+                       onValueChange = { reviewViewModel.comment = it },
                        placeholder = { Text("Share your thoughts about this sneaker") },
                        maxLines = 1,
                        colors = getTextFieldColors()

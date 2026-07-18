@@ -14,7 +14,7 @@ import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.model.entities.User
 import com.example.sneakersapp.model.repositories.UserRepository
 
-@Database(version = 14, entities = [User::class,
+@Database(version = 16, entities = [User::class,
     Review::class,Sneaker::class], exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 

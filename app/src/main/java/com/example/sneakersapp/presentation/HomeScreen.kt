@@ -2,6 +2,7 @@ package com.example.sneakersapp.presentation
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -77,7 +78,8 @@ Box {
 
         Column(modifier = Modifier.fillMaxWidth()
             .fillMaxHeight()
-            .padding(innerPadding)) {
+            .padding(innerPadding)
+            .background(color = MaterialTheme.colorScheme.surface)) {
 
             Row (modifier = Modifier.padding(top =15.dp, start = 10.dp)){
                 Image(

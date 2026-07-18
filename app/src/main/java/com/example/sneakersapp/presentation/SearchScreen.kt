@@ -2,8 +2,6 @@ package com.example.sneakersapp.presentation
 
 
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,24 +9,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,16 +36,17 @@ import com.example.sneakersapp.model.entities.Sneaker
 import com.example.sneakersapp.model.items.SearchItem
 import com.example.sneakersapp.navigation.Screen
 import com.example.sneakersapp.ui.theme.getTextFieldColors
+import com.example.sneakersapp.viewmodels.ReviewsViewModel
 import com.example.sneakersapp.viewmodels.SneakersViewModel
 
 
 @Composable
 fun SearchScreen (navController: NavController) {
-    var query by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
 
 
     val viewModel: SneakersViewModel = hiltViewModel()
+    val reviewViewModel: ReviewsViewModel = hiltViewModel()
 
     val uiState by viewModel.sneakerState.collectAsState()
 
@@ -67,8 +59,8 @@ fun SearchScreen (navController: NavController) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp),
-                value = query,
-                onValueChange = { query = it },
+                value = reviewViewModel.userQuery,
+                onValueChange = { reviewViewModel.userQuery= it },
                 placeholder = { Text("Search Sneakers") },
                 leadingIcon = {
                     Icon(
@@ -106,12 +98,12 @@ fun SearchScreen (navController: NavController) {
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         val sneakers = (uiState as UiState.Success<List<Sneaker>>).data
-                        items(sneakers){sneaker->
-                            SearchItem(sneaker = sneaker, onItemClick = { selectedSneaker->
-//
-                                Log.d("SneakerIddF",selectedSneaker.id.toString())
-                                navController.navigate(Screen.Sneaker.sneakerDetailRoute(selectedSneaker.id))
-                            })
+
+                        items(reviewViewModel.filteredShoes(sneakers)){sneaker->
+
+                                SearchItem(sneaker = sneaker, onItemClick = { selectedSneaker->
+                                    navController.navigate(Screen.Sneaker.sneakerDetailRoute(selectedSneaker.id))
+                                })
                         }
                     }
 

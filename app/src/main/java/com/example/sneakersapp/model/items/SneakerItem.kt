@@ -1,6 +1,7 @@
 package com.example.sneakersapp.model.items
 
 import android.media.Image
+import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -79,7 +80,8 @@ fun SneakerItem(sneaker: Sneaker, onItemClick:(sneaker : Sneaker) -> Unit){
                         .aspectRatio(1.5f)
                         .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
                     contentScale = ContentScale.Crop,
-                    loading = { ShimmerPlaceholder() }
+                    loading = { ShimmerPlaceholder() },
+                    onError = { Log.e("ImageError", "Failed: ${it.result.throwable.message}") }
                 )
             }
 

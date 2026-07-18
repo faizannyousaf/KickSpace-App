@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 package com.example.sneakersapp.presentation
 
 import android.util.Log
@@ -7,7 +9,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,15 +21,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -42,21 +40,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
-import com.example.sneakersapp.R
 import com.example.sneakersapp.UiState
 import com.example.sneakersapp.model.entities.Review
 import com.example.sneakersapp.model.entities.Sneaker
@@ -77,13 +71,11 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
     val uiState by sneakerViewModel.sneakerState.collectAsState()
 
 
-
     Scaffold(
         topBar =
         {
             TopAppBar(
-            title = {
-            },
+            title = {"Street Essential"},
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
@@ -198,15 +190,15 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                     )
 
                     Row {
-                        RatingBar(4.50 , modifier = Modifier)
 
-//                        Text(modifier = Modifier.padding(start = 4.dp),
-//                            text = review, fontWeight = FontWeight.Medium,
-//                            fontSize = 16.sp, color = MaterialTheme.colorScheme.secondary
-//                        )
                         LaunchedEffect(sneakerID) {
                             reviewViewModel.getReviewsCount(sneakerID)
                         }
+                        LaunchedEffect(sneakerID) {
+                            reviewViewModel.getAverageRating(sneakerID)
+                        }
+
+                        RatingBar(reviewViewModel.ratingAverage.toInt() , modifier = Modifier)
 
                         Text(modifier = Modifier.padding(start = 5.dp,top = 5.dp),
 
@@ -215,59 +207,37 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
                         )
                     }
 
-
                     Spacer(modifier = Modifier.size(10.dp))
+
                     Text(
                         "See all reviews ->",
-                        modifier = Modifier.padding(start = 10.dp),
+                        modifier = Modifier.padding(start = 10.dp)
+                            .clickable {
+                                navController.navigate(Screen.Reviews.reviewsRoute(sneakerID))
+                            },
                         fontWeight = FontWeight.Light,
                         fontSize = 18.sp, color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
 
 
+                    if(reviewViewModel.review.isEmpty()){
+                        Log.d("Error","Need Input")
+                    }
+                    else{
+                        Button(onClick = { reviewViewModel.insertReviews(Review
+                            (0,reviewViewModel.review,4,0))
+                            reviewViewModel.review = ""},
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimary,
+                                contentColor = Color.White),
+                            modifier = Modifier.padding(start = 10.dp)
+                        ) {
+                            Text("Add Review")
+                        }
+                    }
 
 
-//                    OutlinedTextField( modifier = Modifier.fillMaxWidth()
-//                        .padding(10.dp),
-//                        value = reviewViewModel.review,
-//                        placeholder = { Text("Add you review") },
-//                        onValueChange = {
-//                            reviewViewModel.review = it
-//                        },
-//
-//                        colors = OutlinedTextFieldDefaults.colors(
-//                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-//                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-//                            focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-//                            unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-//                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
-//                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
-//                            cursorColor = MaterialTheme.colorScheme.onSecondary,
-//                            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-//                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-//                            focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
-//                            unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-//                        )
-//                    )
-//
-//                    if(reviewViewModel.review.isEmpty()){
-//                        Log.d("Error","Need Input")
-//                    }
-//                    else{
-//                        Button(onClick = { reviewViewModel.insertReviews(Review
-//                            (0,reviewViewModel.review,4,0.0f))
-//                            reviewViewModel.review = ""},
-//                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onPrimary,
-//                                contentColor = Color.White),
-//                            modifier = Modifier.padding(start = 10.dp)
-//                        ) {
-//                            Text("Add Review")
-//                        }
-//                    }
-//
-//
-//                    Spacer(modifier = Modifier.size(15.dp))
-//                    LoadReviews(reviewViewModel,sneakerID, navController)
+                    Spacer(modifier = Modifier.size(15.dp))
+                    //LoadReviews(reviewViewModel,sneakerID, navController)
                 }
 
             }
@@ -275,76 +245,6 @@ fun SneakerScreen(sneakerID : Int, navController: NavController){
     }
 }
 
-//@Composable
-//fun LoadReviews(reviewsViewModel: ReviewsViewModel, sneakerID: Int,
-//                navController: NavController){
-//
-//    val reviewsState by reviewsViewModel.reviewsState.collectAsState()
-//
-//   when(val state = reviewsState){
-//       is UiState.Loading -> {
-//           CircularProgressIndicator(
-//               modifier = Modifier.size(20.dp),
-//               color = MaterialTheme.colorScheme.onPrimary
-//           )
-//       }
-//
-//       is UiState.Success -> {
-//           if(state.data.isNotEmpty())
-//               ReviewsUI(state.data,reviewsViewModel.getUserEmail(), navController,sneakerID)
-//       }
-//
-//       is UiState.Error -> TODO()
-//   }
-//
-//
-//}
-//
-//@Composable
-//fun ReviewsUI(reviewsList : List<Review>, userEmail : String,
-//              navController: NavController, sneakerID: Int){
-//
-//    Card(
-//        modifier = Modifier.fillMaxWidth()
-//            .height(175.dp)
-//            .padding(10.dp),
-//        colors = CardDefaults.cardColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-//        )
-//    ) {
-//        Column {
-//            Row {
-//                Image(
-//                    modifier = Modifier
-//                        .size(80.dp)
-//                        .padding(top = 8.dp, start = 5.dp)
-//                        .clip(CircleShape),
-//                    contentScale = ContentScale.Crop,
-//                    painter = painterResource(R.drawable.user_placeholder),
-//                    contentDescription = "user_picture"
-//                )
-//
-//                Text(modifier = Modifier.padding(top = 15.dp)
-//                    , text = userEmail.take(6),
-//                    fontWeight = FontWeight.Bold,
-//                    color = MaterialTheme.colorScheme.onPrimary)
-//            }
-//            Spacer(modifier = Modifier.size(5.dp))
-//            Text(modifier = Modifier.padding(start = 10.dp),
-//                text = reviewsList.last().comment)
-//        }
-//
-//        Spacer(modifier = Modifier.size(5.dp))
-//
-//        Text(modifier = Modifier.clickable {
-//            navController.navigate(Screen.Reviews.reviewsRoute(sneakerID))
-//
-//        },
-//            fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, text = "See more..")
-//
-//    }
-//
-//}
 
 @Composable
 fun ShimmerPlaceholder() {

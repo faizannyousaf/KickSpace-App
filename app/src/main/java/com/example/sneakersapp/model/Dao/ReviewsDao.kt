@@ -26,5 +26,8 @@ interface ReviewsDao {
      @Query("Select COUNT(*) From review where sneakerId == :sneakerId")
      suspend fun fetchReviewCount(sneakerId : Int) : Int
 
+    @Query("Select AVG(rating) From review where sneakerId == :sneakerId")
+    suspend fun getRatingAverage(sneakerId : Int) : Float?
+
 
 }

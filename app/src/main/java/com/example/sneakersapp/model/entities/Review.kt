@@ -12,6 +12,8 @@ data class Review(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "comment") val comment : String,
     @ColumnInfo (name = "sneakerId") val sneakerId: Int,
-    @SerializedName("rating") var rating: Float = 0.0f,
+    @SerializedName("rating") var rating: Int = 0,
+    @SerializedName("name") var userName: String = "",
+    val timestamp: Long = System.currentTimeMillis()
 
     )

@@ -11,8 +11,5 @@ class AddReviewModel : ViewModel() {
 
     var selectedRating by mutableStateOf(0)
 
-//    fun onRatingChanged(rating: Int) {
-//        selectedRating = rating
-//    }
 
 }
